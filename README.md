@@ -30,5 +30,8 @@
 ### ios 배포진행
     eas submit --platform ios 
 
+### 안드로이드 빌드 
+    eas build -p android
+
 ### 안드로이드 빌드 (에뮬레이터용 빌드)
      eas build -p android --profile preview
