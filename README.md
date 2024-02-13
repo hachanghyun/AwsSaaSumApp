@@ -41,19 +41,8 @@
     {
   "expo": {
     "name": "awsSaaSumApp", //수정필수!!!
-    "slug": "awsSaaSumApp",
     "version": "1.0.2", //수정필수!!!
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.hotong.awsSaaSumApp", //수정필수!!!
@@ -63,19 +52,5 @@
       "package": "com.hotong.awsSaaSumApp", //수정필수!!!
       "versionCode": 3, //수정필수!!!
       "vsersionName" : "3.0", //수정필수!!!
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "99a7b18a-f6b0-4ba3-8e35-8e3491dc52b5"
-      }
-    }
-  }
-}
+
 
