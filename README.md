@@ -39,7 +39,7 @@
 ## 기타 설정 할것
 ### app.json
     {
-  "expo": {
+    "expo": {
     "name": "awsSaaSumApp", //수정필수!!!
     "version": "1.0.2", //수정필수!!!
 
