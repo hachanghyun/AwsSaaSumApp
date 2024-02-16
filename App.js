@@ -13,6 +13,10 @@ import TopicsScreen from './screens/TopicScreen';
 import SubtopicsScreen from './screens/SubtopicsScreen';
 import TypingTextScreen from './screens/TypingTextScreen';
 import SubSearchScreen from './screens/SubSearchScreen.js';
+import SearchTypingScreen from './screens/SearchTypingScreen.js';
+import AnswerScreen from './screens/AnswerScreen.js';
+import { TopicsProvider } from './contexts/TopicsContext.js';
+//import TopicsScreen from './screens/TopicsScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -20,10 +24,8 @@ const Tab = createBottomTabNavigator();
 function HomeStackScreen() {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="AWS SAA 요약" component={HomeScreen} />
-        <Stack.Screen name="목차" component={ChaptersScreen} />
-        <Stack.Screen name="Contents" component={ChapterDetailsScreen} />
-        <Stack.Screen name="Description" component={DetailContentScreen} />
+        <Stack.Screen name="AWS SAA 테스트" component={HomeScreen} />
+        <Stack.Screen name="문제" component={AnswerScreen} />
       </Stack.Navigator>
     );
   }
@@ -31,7 +33,7 @@ function HomeStackScreen() {
   function TopicsStackScreen() {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="토픽 목차" component={TopicsScreen} />
+        <Stack.Screen name="AWS SAA 요약" component={TopicsScreen} />
         <Stack.Screen name="서브토픽 목차" component={SubtopicsScreen} />
         <Stack.Screen name="AI 답변" component={TypingTextScreen} />
       </Stack.Navigator>
@@ -42,22 +44,26 @@ function HomeStackScreen() {
     return (
       <Stack.Navigator>
         <Stack.Screen name="검색" component={SearchScreen} />
-        <Stack.Screen name="Description" component={SubSearchScreen} />
+        <Stack.Screen name="AI 답변 내용" component={SearchTypingScreen} />
       </Stack.Navigator>
     );
   }
 
   function App() {
     return (
+      <TopicsProvider>
       <NavigationContainer>
         <Tab.Navigator screenOptions={{ headerShown: false }}>
-          <Tab.Screen name="Summary" component={HomeStackScreen}  
-           options={{
-            tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="description" size={size} color={color} />
-            ),
-        }} />
-          <Tab.Screen 
+          <Tab.Screen
+            name="Summary"
+            component={TopicsStackScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <MaterialIcons name="description" size={size} color={color} />
+              ),
+            }}
+          />
+        <Tab.Screen 
           name="Search" 
           component={SearchStackScreen}
           options={{
@@ -66,15 +72,12 @@ function HomeStackScreen() {
             ),
           }} 
         />
-        <Tab.Screen
-          name="AI"
-          component={TopicsStackScreen}
-          options={{
+          <Tab.Screen name="Test" component={HomeStackScreen}  
+           options={{
             tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="smartphone" size={size} color={color} />
+            <MaterialIcons name="question-answer" size={size} color={color} />
             ),
-          }}
-        />
+        }} />
         <Tab.Screen 
           name="about" 
           component={SettingsScreen}
@@ -86,6 +89,7 @@ function HomeStackScreen() {
         />
         </Tab.Navigator>
       </NavigationContainer>
+      </TopicsProvider>
     );
   }
 

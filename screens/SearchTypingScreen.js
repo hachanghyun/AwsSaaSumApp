@@ -1,8 +1,8 @@
-// TypingTextScreen.js
+// SearchTypingScreen.js
 import React, { useState, useEffect } from 'react';
 import { ScrollView, Text, ActivityIndicator, StyleSheet } from 'react-native';
 
-const TypingTextScreen = ({ route }) => {
+const SearchTypingScreen = ({ route }) => {
   const text = route.params?.text || '';
   const [displayedText, setDisplayedText] = useState('');
   const [index, setIndex] = useState(0);
@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TypingTextScreen;
+export default SearchTypingScreen;

@@ -1,29 +1,10 @@
 // TopicsScreen.js
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react'; // useContext를 추가합니다
 import { ScrollView, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
-import { API_BASE_URL } from '../config/config';
+import { TopicsContext } from '../contexts/TopicsContext'; // TopicsContext를 import합니다
 
 const TopicsScreen = ({ navigation }) => {
-  const [topics, setTopics] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/api/topics`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        setTopics(data);
-        setIsLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching topics: ', error);
-        setIsLoading(false);
-      });
-  }, []);
+  const { topics, isLoading } = useContext(TopicsContext); // Context에서 데이터를 가져옵니다
 
   const handlePressTopic = (topicId) => {
     navigation.navigate('서브토픽 목차', { topicId });

@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "awsSaaSumApp",
+    "name": "awsSaaSumApp", 
     "slug": "awsSaaSumApp",
-    "version": "1.0.2",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -17,12 +17,12 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.hotong.awsSaaSumApp",
-      "buildNumber": "1.0.2"
+      "buildNumber": "1.0.4"
     },
     "android": {
       "package": "com.hotong.awsSaaSumApp",
-      "versionCode": 3,
-      "vsersionName" : "3.0",
+      "versionCode": 5,
+      "vsersionName" : "5.0",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"

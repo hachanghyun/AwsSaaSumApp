@@ -1,36 +1,60 @@
-import React, { useState, useContext,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Image, Modal, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
-import { TopicsContext } from '../contexts/TopicsContext';
 import { API_BASE_URL } from '../config/config';
 
 const chapterImage = require('../assets/test.png');
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-  const [selectedTopic, setSelectedTopic] = useState('');
-  const [selectedSubtopic, setSelectedSubtopic] = useState('');
+  const [selectedTopic, setSelectedTopic] = useState('Access');
+  const [selectedSubtopic, setSelectedSubtopic] = useState(''); // 추가된 상태
   const [isFetchingData, setIsFetchingData] = useState(false);
-  const { topics, subtopics } = useContext(TopicsContext);
+  const [subtopics, setSubtopics] = useState([]);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  
-  // 토픽에 따른 서브토픽 필터링
-  useEffect(() => {
-    if (selectedTopic !== '') {
-      const filteredSubtopics = subtopics.filter(subtopic => subtopic.topic.name === selectedTopic);
-      setSelectedSubtopic(filteredSubtopics.length > 0 ? filteredSubtopics[0].name : '');
-    }
-  }, [selectedTopic, subtopics]);
 
   // 버튼 스타일을 동적으로 결정하는 함수
   const getButtonStyle = () => {
     return isButtonDisabled ? styles.buttonDisabled : styles.button;
   };
 
+  const topics = [
+    'Access', 'Compute', 'Network', 'Serverless', 'Data', 'Analytics', 
+    'Machine Learning', 'Decoupling', 'Container', 'Monitoring', 'Security & Encryption'
+  ];
+
+  useEffect(() => {
+    const topicId = topics.indexOf(selectedTopic) + 1;
+    //console.log("topicId",topicId);
+    if (topicId != -1) {
+      fetchSubtopics(topicId);
+    }
+  }, [selectedTopic]);
+
+  const fetchSubtopics = (topicId) => {
+    //console.log(topicId);
+    setIsFetchingData(true);
+    fetch(`${API_BASE_URL}/api/topics/${topicId}/subtopics`)
+      .then(response => response.json())
+      .then(data => {
+        setSubtopics(data);
+        if (data.length > 0) {
+          //console.log(data);
+          const randomIndex = Math.floor(Math.random() * data.length);
+          setSelectedSubtopic(data[randomIndex]); // 서브토픽 상태 업데이트
+        }
+       setIsFetchingData(false);
+      })
+      .catch(error => {
+        console.error('Error fetching subtopics: ', error);
+        setIsFetchingData(false);
+      });
+  };
+
   const handleButtonPress = () => {
     const topicId = topics.indexOf(selectedTopic) + 1;
-    //fetchSubtopics(topicId);
+    fetchSubtopics(topicId);
     navigateToDetailContent();
   };
 
@@ -77,7 +101,7 @@ const HomeScreen = () => {
           style={styles.picker}
         >
           {topics.map((topic, index) => (
-            <Picker.Item key={index} label={topic.name} value={topic.name} />
+            <Picker.Item key={index} label={topic} value={topic} />
           ))}
         </Picker>
       </View>
@@ -105,53 +129,53 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingHorizontal: 20,
-      backgroundColor: '#f5f5f5',
-    },
-    imageContainer: {
-      marginBottom: 20,
-    },
-    image: {
-      width: 200,
-      height: 200,
-      resizeMode: 'contain',
-    },
-    pickerContainer: {
-      width: '100%',
-      paddingHorizontal: 20,
-    },
-    picker: {
-      width: '100%',
-    },
-    button: {
-      backgroundColor: '#007BFF',
-      paddingVertical: 12,
-      paddingHorizontal: 30,
-      borderRadius: 5,
-      marginBottom: 20,
-    },
-    // 비활성화된 버튼의 스타일
-    buttonDisabled: {
-      backgroundColor: '#CCCCCC', // 회색
-      paddingVertical: 12,
-      paddingHorizontal: 30,
-      borderRadius: 5,
-      marginBottom: 20,
-    },
-    buttonText: {
-      color: 'white',
-      fontSize: 18,
-    },
-    modalContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-  });
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    backgroundColor: '#f5f5f5',
+  },
+  imageContainer: {
+    marginBottom: 20,
+  },
+  image: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+  },
+  pickerContainer: {
+    width: '100%',
+    paddingHorizontal: 20,
+  },
+  picker: {
+    width: '100%',
+  },
+  button: {
+    backgroundColor: '#007BFF',
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  // 비활성화된 버튼의 스타일
+  buttonDisabled: {
+    backgroundColor: '#CCCCCC', // 회색
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+});
 
 export default HomeScreen;

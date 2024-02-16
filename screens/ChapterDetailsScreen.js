@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { API_BASE_URL } from '../config/config'; // config.js에서 URL 가져오기
+import FlipCard from 'react-native-flip-card';
+import { API_BASE_URL } from '../config/config';
 
 const ChapterDetailsScreen = ({ route }) => {
   const { chapterId } = route.params;
   const [chapterDetails, setChapterDetails] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [detailContent, setDetailContent] = useState({});
+  const [loadingDetails, setLoadingDetails] = useState({});
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -14,49 +16,60 @@ const ChapterDetailsScreen = ({ route }) => {
       .then(response => response.json())
       .then(data => {
         setChapterDetails(data);
-        setIsLoading(false);
-        // 네비게이션 바의 타이틀을 detail의 content로 동적으로 설정합니다.
-        //console.log(data);
-        //debugger;
         navigation.setOptions({
             title: data[0].chapter.title,
-            });
+        });
       })
       .catch(error => {
         console.error('Error fetching chapter details: ', error);
-        setIsLoading(false);
       });
   }, [chapterId]);
 
-  const navigateToDetailContent = (detailId) => {
-    navigation.navigate('Description', { detailId });
-  };
-
-  /*
-  // 네비게이션 바의 타이틀을 현재 선택된 chapter의 title로 설정합니다.
-  useEffect(() => {
-    if (chapterDetails.length > 0) {
-      navigation.setOptions({
-        title: chapterDetails[0].title, // 챕터의 title로 설정합니다.
+  const loadDetailContent = (detailId) => {
+    if (loadingDetails[detailId]) return; 
+    setLoadingDetails(prev => ({ ...prev, [detailId]: true }));
+    fetch(`${API_BASE_URL}/api/chapters/details/${detailId}`)
+      .then(response => response.json())
+      .then(data => {
+        const sentences = data.detailContent.split(';');
+        setDetailContent(prevState => ({ ...prevState, [detailId]: sentences }));
+        setLoadingDetails(prev => ({ ...prev, [detailId]: false }));
+      })
+      .catch(error => {
+        console.error('Error fetching detail content: ', error);
+        setLoadingDetails(prev => ({ ...prev, [detailId]: false }));
       });
-    }
-  }, [chapterDetails, navigation]);
-  */
-
-  if (isLoading) {
-    return <ActivityIndicator />;
-  }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {chapterDetails.map((detail, index) => (
-        <TouchableOpacity 
-          key={index} 
-          onPress={() => navigateToDetailContent(detail.id)}
+        <FlipCard 
+          key={index}
+          flipHorizontal={true}
+          flipVertical={false}
           style={styles.card}
+          onFlipEnd={() => loadDetailContent(detail.id)}
         >
-          <Text style={styles.cardText}>{detail.content}</Text>
-        </TouchableOpacity>
+          {/* 앞면 */}
+          <View style={styles.face}>
+            <Text style={styles.cardText}>{detail.content}</Text>
+          </View>
+          {/* 뒷면 */}
+          <View style={styles.back}>
+            {loadingDetails[detail.id] ? (
+              <ActivityIndicator />
+            ) : (
+              detailContent[detail.id] ? (
+                <Text style={styles.cardText}>
+                  {detailContent[detail.id].join('\n')}
+                </Text>
+              ) : (
+                <ActivityIndicator />
+              )
+            )}
+          </View>
+        </FlipCard>
       ))}
     </ScrollView>
   );
@@ -66,26 +79,39 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     justifyContent: 'flex-start',
-    alignItems: 'left',
+    alignItems: 'stretch',
     padding: 10,
   },
   card: {
-    backgroundColor: 'white',
-    borderRadius: 10,
+    width: '100%', // 너비를 100%로 설정
+    minHeight: 80, // 최소 높이 설정
+    backgroundColor: '#f9f9f9',
+    borderRadius: 8,
     marginVertical: 5,
-    width: '100%',
-    justifyContent: 'left',
-    alignItems: 'left',
-    elevation: 2,
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
+    elevation: 1,
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    shadowOffset: { width: 0, height: 1 },
+  },
+  face: {
     padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderRadius: 8,
+  },
+  back: {
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#e6e6e6',
+    borderRadius: 8,
   },
   cardText: {
-    color: '#333333',
+    color: '#333',
     fontSize: 16,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

@@ -11,15 +11,6 @@ const SettingsScreen = () => {
         <View style={styles.cell}><Text style={styles.text}>1.0</Text></View>
       </View>
       <View style={styles.row}>
-        <View style={styles.cell}><Text style={styles.headerText}>Summary Source</Text></View>
-        <View style={styles.cell}><Image source={sourceImage} style={styles.image} />
-          <Text style={styles.text}>AWS 공인 솔루션스 아키텍트 스터디 가이드 - 어소시에이트 4/e</Text></View>
-      </View>
-      <View style={styles.row}>
-        <View style={styles.cell}><Text style={styles.headerText}>AI Model</Text></View>
-        <View style={styles.cell}><Text style={styles.text}>gpt-3.5-turbo</Text></View>
-      </View>
-      <View style={styles.row}>
         <View style={styles.cell}><Text style={styles.headerText}>Contact Me</Text></View>
         <View style={styles.cell}><Text style={styles.text}>hacwx1@gmail.com</Text></View>
       </View>

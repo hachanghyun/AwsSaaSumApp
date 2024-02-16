@@ -1,46 +1,58 @@
-// SearchScreen.js
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ScrollView, TextInput } from 'react-native';
+import React, { useState, useContext,useEffect } from 'react';
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ScrollView, TextInput, Modal } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { API_BASE_URL } from '../config/config'; // config.js에서 URL 가져오기
+import { TopicsContext } from '../contexts/TopicsContext'; // TopicsContext를 import합니다
 
 const SearchScreen = () => {
   const [chapterDetails, setChapterDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredChapters, setFilteredChapters] = useState([]);
+  const [isFetchingData, setIsFetchingData] = useState(false);
   const navigation = useNavigation();
-
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/api/chapters/search`)
-      .then(response => response.json())
-      .then(data => {
-        setChapterDetails(data);
-        setFilteredChapters(data); // 초기 상태에서는 모든 데이터 표시
-        setIsLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching data: ', error);
-        setIsLoading(false);
-      });
-  }, []);
-
+  const { subtopics } = useContext(TopicsContext); // Context에서 subtopics를 가져옵니다
+  
   const handleSearch = (query) => {
     setSearchQuery(query);
-    const filteredData = chapterDetails.filter(item =>
-      item.content.toLowerCase().includes(query.toLowerCase())
+    const filteredData = subtopics.filter(item =>
+      item.name.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredChapters(filteredData);
   };
 
-  const navigateToDetailContent = (detailId) => {
-    navigation.navigate('Description', { detailId, fromTab: 'Search' });
-  };
+  useEffect(() => {
+    //console.log("Subtopics 로드 상태:", subtopics);
+    setFilteredChapters(subtopics); // 컴포넌트 로딩 시 모든 서브토픽을 표시
+  }, [subtopics]);
 
-  if (isLoading) {
-    return <ActivityIndicator />;
-  }
+  const navigateToDetailContent = (subtopicName) => {
+    setIsFetchingData(true);
+    const message = `안녕 너는 세계적인 AWS 아키텍처 전문가야. 너의 소개멘트랑 형식적인 말 생략해줬으면 좋겠어. AWS 서비스중 ${subtopicName}에 대해 간단히 설명해줘`;
+    console.log(message);
+    const botRequest = {
+      message: message,
+    };
+
+    fetch(`${API_BASE_URL}/api/topics/send`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(botRequest),
+    })
+    .then(response => response.json())
+    .then(data => {
+      navigation.navigate('AI 답변 내용', { text: data.choices[0].text });
+    })
+    .catch(error => {
+      console.error('Error sending bot request: ', error);
+    })
+    .finally(() => {
+      setIsFetchingData(false);
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -59,13 +71,23 @@ const SearchScreen = () => {
         {filteredChapters.map((detail, index) => (
           <TouchableOpacity 
             key={index} 
-            onPress={() => navigateToDetailContent(detail.id)}
+            onPress={() => navigateToDetailContent(detail.name)}
             style={styles.card}
           >
-            <Text style={styles.cardText}>{detail.content}</Text>
+            <Text style={styles.cardText}>{detail.name}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
+      <Modal
+        transparent={true}
+        animationType="fade"
+        visible={isFetchingData}
+        onRequestClose={() => {}}
+      >
+        <View style={styles.modalContainer}>
+          <ActivityIndicator size="large" color="#fff" />
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -112,6 +134,12 @@ const styles = StyleSheet.create({
     color: '#333333',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 });
 
