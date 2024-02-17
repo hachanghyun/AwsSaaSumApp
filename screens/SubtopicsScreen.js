@@ -9,12 +9,13 @@ const SubtopicsScreen = ({ route }) => {
   const { subtopics, isLoading } = useContext(TopicsContext);
   const navigation = useNavigation();
   const [isFetchingData, setIsFetchingData] = useState(false);
+  const [jsonData, setJsonData] = useState();
 
   const filteredSubtopics = subtopics.filter(subtopic => subtopic.topic.id.toString() === topicId.toString());
 
   const sendBotRequest = (subtopicName) => {
     setIsFetchingData(true);
-    const message = `안녕 너는 세계적인 AWS 아키텍처 전문가야.너의 소개멘트랑 형식적인 말 생략해줬으면 좋겠어. AWS 서비스중 ${subtopicName}에 대해 간단히 설명해줘.`;
+    const message = `AWS ${subtopicName}에 대해 알려줘.`;
     const botRequest = {
       message: message,
     };
@@ -28,7 +29,10 @@ const SubtopicsScreen = ({ route }) => {
     })
     .then(response => response.json())
     .then(data => {
-      navigation.navigate('AI 답변', { text: data.choices[0].text });
+  
+      const parsedData = JSON.parse(data.choices[0].text);
+
+      navigation.navigate('AI 답변', { text: parsedData.content});
     })
     .catch(error => {
       console.error('Error sending bot request: ', error);
@@ -73,7 +77,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   scrollView: {
-    flex: 1,
+    //flex: 1,
   },
   card: {
     backgroundColor: 'white',

@@ -12,7 +12,7 @@ const SearchTypingScreen = ({ route }) => {
       const timer = setTimeout(() => {
         setDisplayedText(displayedText + text.charAt(index));
         setIndex(index + 1);
-      }, 20); // 50 밀리초 간격으로 한 글자씩 추가
+      }, 10); // 50 밀리초 간격으로 한 글자씩 추가
 
       return () => clearTimeout(timer);
     }

@@ -16,12 +16,37 @@ const HomeScreen = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   
   // 토픽에 따른 서브토픽 필터링
-  useEffect(() => {
+  const selectRandomSubtopic = () => {
     if (selectedTopic !== '') {
       const filteredSubtopics = subtopics.filter(subtopic => subtopic.topic.name === selectedTopic);
-      setSelectedSubtopic(filteredSubtopics.length > 0 ? filteredSubtopics[0].name : '');
+      if (filteredSubtopics.length > 0) {
+        const randomIndex = Math.floor(Math.random() * filteredSubtopics.length);
+        setSelectedSubtopic(filteredSubtopics[randomIndex].name); // 랜덤 서브토픽 선택
+      } else {
+        setSelectedSubtopic(''); // 서브토픽이 없는 경우 빈 문자열 설정
+      }
     }
+  };
+
+
+  useEffect(() => {
+    if (topics.length > 0) {
+      setSelectedTopic(topics[0].name); // 초기 토픽 설정
+      selectRandomSubtopic(); // 초기 서브토픽 설정
+    }
+  }, [topics]); // topics 상태가 변경될 때마다 실행
+
+  useEffect(() => {
+    selectRandomSubtopic();
   }, [selectedTopic, subtopics]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      selectRandomSubtopic(); // 화면에 진입할 때마다 랜덤 서브토픽 선택
+    });
+
+    return unsubscribe; // 컴포넌트가 언마운트될 때 리스너 제거
+  }, [navigation, selectedTopic, subtopics]);
 
   // 버튼 스타일을 동적으로 결정하는 함수
   const getButtonStyle = () => {
@@ -37,15 +62,21 @@ const HomeScreen = () => {
   const navigateToDetailContent = () => {
     setIsButtonDisabled(true); // 버튼 비활성화
     setIsFetchingData(true);
-    // 문제 요청 메시지 구성
-    //console.log(selectedSubtopic.name);
-    const message = `안녕 너는 세계적인 AWS 아키텍처 전문가야. 형식적인 말 생략하고 AWS SAA ${selectedSubtopic.name} 주제에 관한 문제하나를 내줘 한두문장 사이로 내줘. 정답은 나중에 알려달라고 할때 알려줘.`;
-    console.log("문제요청", message);
+
+    if (typeof selectedSubtopic === 'undefined') {
+        selectedSubtopic = "Cognito";
+    }
+
+    console.log("selectedSubtopic",selectedSubtopic);
+
+    const message = `너는 세계적인 AWS 전문가야. AWS ${selectedSubtopic} 에 대한 문제 내줘. 문제에 대한 정답은 나중에 알려줘. 인공지능 챗봇이라고 문제내는거 불가능이라고 하지말고${selectedSubtopic} 에 관한 내용으로 문제를 내봐.`;
+    console.log("message",message);
+
     const botRequest = {
       message: message,
     };
 
-    fetch(`${API_BASE_URL}/api/topics/send`, {
+    fetch(`${API_BASE_URL}/api/topics/original`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -54,7 +85,8 @@ const HomeScreen = () => {
     })
       .then(response => response.json())
       .then(data => {
-        navigation.navigate('문제', { text: data.choices[0].text });
+
+        navigation.navigate('문제', { text: data.choices[0].text});
       })
       .catch(error => {
         console.error('Error sending bot request: ', error);
