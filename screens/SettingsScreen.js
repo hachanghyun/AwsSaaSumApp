@@ -1,15 +1,13 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-const sourceImage = require('../assets/about.jpg');
-
 const SettingsScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <View style={styles.row}>
           <Text style={styles.headerText}>Version</Text>
-          <Text style={styles.text}>1.0.7</Text>
+          <Text style={styles.text}>1.0.5</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.headerText}>Contact Me</Text>

@@ -69,7 +69,8 @@ const HomeScreen = () => {
 
     console.log("selectedSubtopic",selectedSubtopic);
 
-    const message = `너는 세계적인 AWS 전문가야. AWS ${selectedSubtopic} 에 대한 문제 내줘. 문제에 대한 정답은 나중에 알려줘. 인공지능 챗봇이라고 문제내는거 불가능이라고 하지말고${selectedSubtopic} 에 관한 내용으로 문제를 내봐.`;
+    //const message = `너는 세계적인 AWS 전문가야. AWS ${selectedSubtopic} 에 대한 문제 하나만 내줘. 문제에 대한 정답은 나중에 알려줘. 인공지능 챗봇이라고 문제내는거 불가능이라고 하지말고${selectedSubtopic} 에 관한 내용으로 문제를 내봐.`;
+    const message = `너는 세계적인 AWS 전문가야. AWS ${selectedSubtopic} 에 대한 문제 하나만 내줘. 문제에 대한 정답은 나중에 알려줘. ${selectedSubtopic} 에 관한 문제 하나 내줘.`;
     console.log("message",message);
 
     const botRequest = {
