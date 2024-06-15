@@ -4,62 +4,6 @@
 ## 2. FrontEnd Deployment URL
   https://github.com/hachanghyun/AwsSaaSumApp
 
-# expo 앱개발 정리
-
-## expo 프로젝트 세팅
-### expo-cli 전역으로 설치해주는 명령어
-    npm install -g expo-cli 
-
-### expo 프로젝트 만들어주는 명령어
-    expo init "프로젝트명"
-    
-### node module 설치 명령어(프로젝트안에서 실행)
-    npm install
-
-## expo 실행 명령어
-### expo 프로젝트 실행
-    npm start
-
-## 빌드
-### eas cli 설치
-    npm install -g eas-cli
-    
-### expo 계정에 로그인
-    eas login
-
-### configure the project
-    eas build:configure
-    
-### ios 빌드
-    eas build -p ios
-
-### ios 배포진행
-    eas submit --platform ios 
-
-### 안드로이드 빌드 
-    eas build -p android
-
-### 안드로이드 빌드 (에뮬레이터용 빌드)
-     eas build -p android --profile preview
-
-## 기타 설정 할것
-### app.json
-    {
-    "expo": {
-    "name": "awsSaaSumApp", //수정필수!!!
-    "version": "1.0.2", //수정필수!!!
-
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.hotong.awsSaaSumApp", //수정필수!!!
-      "buildNumber": "1.0.2" //수정필수!!!
-    },
-    "android": {
-      "package": "com.hotong.awsSaaSumApp", //수정필수!!!
-      "versionCode": 3, //수정필수!!!
-      "vsersionName" : "3.0", //수정필수!!!
-
-
 ## 1. Summary
 
 ### Aws SAA Summary View
@@ -217,10 +161,57 @@ Thank you:)
 ##### 앱 배포 스크린샷 
 ##### www.figma.com
 
-##### 도커에 젠킨스 세팅
-##### docker run -itd --name jenkins -p 8085:8080 jenkins/jenkins
+# expo 앱개발 정리
 
-    Docker로 설치한 Jenkins의 초기 관리자 비밀번호를 찾으려면 Docker 컨테이너의 로그에서 해당 정보를 가져올 수 있습니다. 이를 위해 다음 단계를 따르세요:
+## expo 프로젝트 세팅
+### expo-cli 전역으로 설치해주는 명령어
+    npm install -g expo-cli 
+
+### expo 프로젝트 만들어주는 명령어
+    expo init "프로젝트명"
     
-    컨테이너의 로그 확인: Jenkins 컨테이너의 로그를 확인하려면, 먼저 컨테이너의 이름이나 ID를 알아야 합니다. 이는 docker ps 명령어를 통해 확인할 수 있습니다. 그 후, docker logs [컨테이너 이름 또는 ID] 명령어를 사용하여 로그를 확인합니다. 초기 관리자 비밀번호는 로그의 어딘가에 기록되어 있을 것입니다.
+### node module 설치 명령어(프로젝트안에서 실행)
+    npm install
 
+## expo 실행 명령어
+### expo 프로젝트 실행
+    npm start
+
+## 빌드
+### eas cli 설치
+    npm install -g eas-cli
+    
+### expo 계정에 로그인
+    eas login
+
+### configure the project
+    eas build:configure
+    
+### ios 빌드
+    eas build -p ios
+
+### ios 배포진행
+    eas submit --platform ios 
+
+### 안드로이드 빌드 
+    eas build -p android
+
+### 안드로이드 빌드 (에뮬레이터용 빌드)
+     eas build -p android --profile preview
+
+## 기타 설정 할것
+### app.json
+    {
+    "expo": {
+    "name": "awsSaaSumApp", //수정필수!!!
+    "version": "1.0.2", //수정필수!!!
+
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hotong.awsSaaSumApp", //수정필수!!!
+      "buildNumber": "1.0.2" //수정필수!!!
+    },
+    "android": {
+      "package": "com.hotong.awsSaaSumApp", //수정필수!!!
+      "versionCode": 3, //수정필수!!!
+      "vsersionName" : "3.0", //수정필수!!!
