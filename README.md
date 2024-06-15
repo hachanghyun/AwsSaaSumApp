@@ -1,5 +1,11 @@
 # expo 앱개발 정리
 
+## 1. SERVER Deployment URL
+  https://github.com/hachanghyun/awsSaaSumServer
+
+## 2. FrontEnd Deployment URL
+  https://github.com/hachanghyun/AwsSaaSumApp
+
 ## expo 프로젝트 세팅
 ### expo-cli 전역으로 설치해주는 명령어
     npm install -g expo-cli 
