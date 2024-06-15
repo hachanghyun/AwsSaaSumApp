@@ -7,7 +7,7 @@ const SettingsScreen = () => {
       <View style={styles.content}>
         <View style={styles.row}>
           <Text style={styles.headerText}>Version</Text>
-          <Text style={styles.text}>1.0.5</Text>
+          <Text style={styles.text}>1.0.6</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.headerText}>Contact Me</Text>

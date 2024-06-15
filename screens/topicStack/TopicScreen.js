@@ -1,7 +1,7 @@
 // TopicsScreen.js
 import React, { useContext } from 'react'; // useContext를 추가합니다
 import { ScrollView, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
-import { TopicsContext } from '../contexts/TopicsContext'; // TopicsContext를 import합니다
+import { TopicsContext } from '../../contexts/TopicsContext'; // TopicsContext를 import합니다
 
 const TopicsScreen = ({ navigation }) => {
   const { topics, isLoading } = useContext(TopicsContext); // Context에서 데이터를 가져옵니다

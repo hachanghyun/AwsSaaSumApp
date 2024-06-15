@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { API_BASE_URL } from '../config/config';
+import { API_BASE_URL } from '../../config/config';
 
 const AnswerScreen = ({ route }) => {
   const navigation = useNavigation();

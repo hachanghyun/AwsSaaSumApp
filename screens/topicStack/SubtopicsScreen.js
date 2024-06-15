@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ScrollView, Modal } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { TopicsContext } from '../contexts/TopicsContext';
-import { API_BASE_URL } from '../config/config';
+import { TopicsContext } from '../../contexts/TopicsContext';
+import { API_BASE_URL } from '../../config/config';
 
 const SubtopicsScreen = ({ route }) => {
   const { topicId } = route.params;

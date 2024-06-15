@@ -2,8 +2,8 @@ import React, { useState, useContext,useEffect } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ScrollView, TextInput, Modal } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { API_BASE_URL } from '../config/config'; // config.js에서 URL 가져오기
-import { TopicsContext } from '../contexts/TopicsContext'; // TopicsContext를 import합니다
+import { API_BASE_URL } from '../../config/config'; // config.js에서 URL 가져오기
+import { TopicsContext } from '../../contexts/TopicsContext'; // TopicsContext를 import합니다
 
 const SearchScreen = () => {
   const [chapterDetails, setChapterDetails] = useState([]);

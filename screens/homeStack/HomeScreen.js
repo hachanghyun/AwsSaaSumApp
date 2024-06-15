@@ -2,10 +2,10 @@ import React, { useState, useContext,useEffect} from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Image, Modal, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
-import { TopicsContext } from '../contexts/TopicsContext';
-import { API_BASE_URL } from '../config/config';
+import { TopicsContext } from '../../contexts/TopicsContext';
+import { API_BASE_URL } from '../../config/config';
 
-const chapterImage = require('../assets/test.png');
+const chapterImage = require('../../assets/test.png');
 
 const HomeScreen = () => {
   const navigation = useNavigation();
