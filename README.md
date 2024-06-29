@@ -215,3 +215,4 @@ Thank you:)
       "package": "com.hotong.awsSaaSumApp", //수정필수!!!
       "versionCode": 3, //수정필수!!!
       "vsersionName" : "3.0", //수정필수!!!
+      
