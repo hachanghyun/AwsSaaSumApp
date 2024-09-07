@@ -6,10 +6,10 @@
     AWS SAA 인증 시험을 준비하는 개발자를 위해 주요 개념과 요점을 정리한 기능을 추가하여 교육용 콘텐츠를 제공
 
 ## - 사용 기술: 
-        React Native, Spring Boot, JPA, MariaDB, AWS EC2, AWS Elastic Beanstalk
+    React Native, Spring Boot, JPA, MariaDB, AWS EC2, AWS Elastic Beanstalk
 
 ## - 성과:
-        AWS EC2와 Elastic Beanstalk를 활용해 로드밸런싱 및 자동 스케일링 아키텍처를 구현, 이를 통해 시스템 가용성 99.9% 유지 및 동시 사용자 처리 능력을 2배 향상. 또한, 트래픽 증가 시 자동 확장을 통해 안정적인 서비스 제공 환경을 구축.
+    AWS EC2와 Elastic Beanstalk를 활용해 로드밸런싱 및 자동 스케일링 아키텍처를 구현, 이를 통해 시스템 가용성 99.9% 유지 및 동시 사용자 처리 능력을 2배 향상. 또한, 트래픽 증가 시 자동 확장을 통해 안정적인 서비스 제공 환경을 구축.
 
 ## SERVER Deployment URL
   https://github.com/hachanghyun/AwsSaaSummaryServer
