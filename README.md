@@ -42,6 +42,7 @@ Thank you:)
 
 ## 2-2. Download URL
 https://play.google.com/store/apps/details?id=com.hotong.awsSaaSumApp
+
 https://apps.apple.com/us/app/aws-saa-%EC%9A%94%EC%A0%90%EC%A0%95%EB%A6%AC/id6477787338
 
 ## 3. Application System Architecture
