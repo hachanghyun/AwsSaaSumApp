@@ -41,8 +41,8 @@ Thank you:)
 <img width="1065" alt="1" src="https://github.com/hachanghyun/awsSaaSummary/assets/33058284/702fab34-ffa2-42af-974d-35040de6fc0d">
 
 ## 2-2. Download URL
-    https://play.google.com/store/apps/details?id=com.hotong.awsSaaSumApp
-    https://apps.apple.com/us/app/aws-saa-%EC%9A%94%EC%A0%90%EC%A0%95%EB%A6%AC/id6477787338
+https://play.google.com/store/apps/details?id=com.hotong.awsSaaSumApp
+https://apps.apple.com/us/app/aws-saa-%EC%9A%94%EC%A0%90%EC%A0%95%EB%A6%AC/id6477787338
 
 ## 3. Application System Architecture
 <img width="1331" alt="123" src="https://github.com/hachanghyun/awsSaaSummary/assets/33058284/fd7d652d-cf51-4651-bb7e-f0a96aa666f4">
