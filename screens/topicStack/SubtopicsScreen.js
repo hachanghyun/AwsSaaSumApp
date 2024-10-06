@@ -11,8 +11,12 @@ const SubtopicsScreen = ({ route }) => {
   const [isFetchingData, setIsFetchingData] = useState(false);
   const [jsonData, setJsonData] = useState();
 
-  const filteredSubtopics = subtopics.filter(subtopic => subtopic.topic.id.toString() === topicId.toString());
+  //console.log("Received topicId:", topicId);
+  //console.log("Subtopics data:", subtopics);
+  const topicIdNumber = parseInt(topicId, 10);
+  const filteredSubtopics = subtopics.filter(subtopic => subtopic.topic.id === topicIdNumber);
 
+  //console.log("test",filteredSubtopics);
   const sendBotRequest = (subtopicName) => {
     setIsFetchingData(true);
     const message = `AWS ${subtopicName}에 대해 알려줘.`;
@@ -27,12 +31,17 @@ const SubtopicsScreen = ({ route }) => {
       },
       body: JSON.stringify(botRequest),
     })
-    .then(response => response.json())
+    .then(response => response.text())
     .then(data => {
-  
-      const parsedData = JSON.parse(data.choices[0].text);
-
-      navigation.navigate('AI 답변', { text: parsedData.content});
+      let parsedData;
+      try {
+        console.log("test",data);
+        parsedData = JSON.parse(data);
+      } catch (error) {
+        console.error('Error parsing JSON response: ', error);
+        parsedData = data; // JSON 파싱에 실패한 경우 원시 데이터 사용
+      }
+      navigation.navigate('AI 답변', { text: parsedData});
     })
     .catch(error => {
       console.error('Error sending bot request: ', error);

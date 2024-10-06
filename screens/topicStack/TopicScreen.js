@@ -7,6 +7,7 @@ const TopicsScreen = ({ navigation }) => {
   const { topics, isLoading } = useContext(TopicsContext); // Context에서 데이터를 가져옵니다
 
   const handlePressTopic = (topicId) => {
+    //console.log("test",topicId);
     navigation.navigate('서브토픽 목차', { topicId });
   };
 

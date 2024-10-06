@@ -44,17 +44,23 @@ const AnswerScreen = ({ route }) => {
     const message = `${initialText}에 대한 정답을 알려주세요.`;
     console.log("Qanswer",message);
 
-    fetch(`${API_BASE_URL}/api/topics/original2`, {
+    fetch(`${API_BASE_URL}/api/topics/send`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ message }),
     })
-      .then(response => response.json())
+      .then(response => response.text())
       .then(data => {
-
-        setAdditionalText(data.choices[0].text);
+        let parsedData;
+        try {
+          parsedData = JSON.parse(data);
+        } catch (error) {
+          console.error('Error parsing JSON response: ', error);
+          parsedData = data; // JSON 파싱에 실패한 경우 원시 데이터 사용
+        }
+        setAdditionalText(parsedData);
         setIsFetchingData(false);
       })
       .catch(error => {

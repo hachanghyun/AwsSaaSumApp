@@ -42,12 +42,17 @@ const SearchScreen = () => {
       },
       body: JSON.stringify(botRequest),
     })
-    .then(response => response.json())
+    .then(response => response.text()) // 응답을 텍스트 형식으로 받음
     .then(data => {
-      
-      const parsedData = JSON.parse(data.choices[0].text);
-
-      navigation.navigate('AI 답변 내용', { text: parsedData.content});
+      console.log("Raw response data:", data); // 원시 응답 데이터 로그
+      let parsedData;
+      try {
+        parsedData = JSON.parse(data);
+      } catch (error) {
+        console.error('Error parsing JSON response: ', error);
+        parsedData = data; // JSON 파싱에 실패한 경우 원시 데이터 사용
+      }
+      navigation.navigate('AI 답변 내용', { text: parsedData });
     })
     .catch(error => {
       console.error('Error sending bot request: ', error);
